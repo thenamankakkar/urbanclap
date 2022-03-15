@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "924244853924",
+    "project_id": "just-me-abd62",
+    "storage_bucket": "just-me-abd62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924244853924:android:5ca29833dfec9112149231",
+        "android_client_info": {
+          "package_name": "www.justme.co.in"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924244853924-h43q012d2t5vpd54met0ldbvrngokeb4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "www.justme.co.in",
+            "certificate_hash": "d0913ecd6120b2e436a8449f272a25ff25163720"
+          }
+        },
+        {
+          "client_id": "924244853924-lda1hij78n0m005o66pjqeqju8ak6tk1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv_Zzuku_2NPzwxHhc-CX2BHnQjtsolfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924244853924-lda1hij78n0m005o66pjqeqju8ak6tk1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
