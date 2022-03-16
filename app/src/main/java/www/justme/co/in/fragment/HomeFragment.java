@@ -3,6 +3,7 @@ package www.justme.co.in.fragment;
 import static www.justme.co.in.utils.SessionManager.about;
 import static www.justme.co.in.utils.SessionManager.contact;
 import static www.justme.co.in.utils.SessionManager.currency;
+import static www.justme.co.in.utils.SessionManager.login;
 import static www.justme.co.in.utils.SessionManager.policy;
 import static www.justme.co.in.utils.SessionManager.terms;
 import static www.justme.co.in.utils.SessionManager.wallet;
@@ -34,12 +35,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.cscodetech.townclap.R;
+
+import www.justme.co.in.activity.BookingActivity;
 import www.justme.co.in.activity.DynamicAllActivity;
 import www.justme.co.in.activity.HearActivity;
+import www.justme.co.in.activity.LoginActivity;
 import www.justme.co.in.activity.SearchActivity;
 import www.justme.co.in.activity.ServiceAllActivity;
 import www.justme.co.in.activity.SubCategoryActivity;
 import www.justme.co.in.activity.SubCategoyTypeActivity;
+import www.justme.co.in.activity.WalletActivity;
 import www.justme.co.in.adepter.BannerAdapter;
 import www.justme.co.in.adepter.CategoryAdapter;
 import www.justme.co.in.adepter.DynamicAdapter;
@@ -107,6 +112,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.RecyclerTo
     SessionManager sessionManager;
     User user;
     CategoryAdapter categoryAdapter;
+    Boolean data;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,7 +128,11 @@ public class HomeFragment extends Fragment implements CategoryAdapter.RecyclerTo
         unbinder = ButterKnife.bind(this, view);
         custPrograssbar = new CustPrograssbar();
         sessionManager = new SessionManager(getActivity());
-        user = sessionManager.getUserDetails("");
+        data = sessionManager.getBooleanData("login");
+        if (data == true){
+            user = sessionManager.getUserDetails("");
+        }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -410,11 +420,19 @@ public class HomeFragment extends Fragment implements CategoryAdapter.RecyclerTo
         if (view.getId() == R.id.ed_search) {
             startActivity(new Intent(getActivity(), SearchActivity.class));
         } else if (view.getId() == R.id.fab) {
-            Intent i = new Intent(getActivity(), HearActivity.class);
-            Bundle b = new Bundle();
-            b.putParcelableArrayList("cat_list", categoryAdapter.getmCatlist());
-            i.putExtras(b);
-            startActivity(i);
+            data = sessionManager.getBooleanData("login");
+            if (data == true){
+                Intent i = new Intent(getActivity(), HearActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelableArrayList("cat_list", categoryAdapter.getmCatlist());
+                i.putExtras(b);
+                startActivity(i);
+            }else {
+                Toast.makeText(getContext(), "You are not Logged In", Toast.LENGTH_SHORT).show();
+                Intent login = new Intent(getActivity(), LoginActivity.class);
+                startActivity(login);
+            }
+
 
         }
     }

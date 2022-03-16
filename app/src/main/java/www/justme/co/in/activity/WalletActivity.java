@@ -1,8 +1,10 @@
 package www.justme.co.in.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,7 +43,7 @@ public class WalletActivity extends BasicActivity implements GetResult.MyListene
     SessionManager sessionManager;
     User user;
     CustPrograssbar custPrograssbar;
-
+    Boolean data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +56,18 @@ public class WalletActivity extends BasicActivity implements GetResult.MyListene
 
 
         sessionManager = new SessionManager(WalletActivity.this);
-        user = sessionManager.getUserDetails("");
-        custPrograssbar = new CustPrograssbar();
-        getWallet();
+        data = sessionManager.getBooleanData("login");
+        if (data == true){
+            user = sessionManager.getUserDetails("");
+            custPrograssbar = new CustPrograssbar();
+            getWallet();
+        }else {
+            Toast.makeText(getApplicationContext(), "You are not Logged In", Toast.LENGTH_SHORT).show();
+            Intent login = new Intent(WalletActivity.this, LoginActivity.class);
+            finish();
+            startActivity(login);
+        }
+
 
     }
 

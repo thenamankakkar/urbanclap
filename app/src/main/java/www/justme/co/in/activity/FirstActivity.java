@@ -31,7 +31,7 @@ public class FirstActivity extends AppCompatActivity {
                         startActivity(openMainActivity);
                         finish();
                     } else {
-                        Intent openMainActivity = new Intent(FirstActivity.this, IntroActivity.class);
+                        Intent openMainActivity = new Intent(FirstActivity.this, HomeActivity.class);
                         startActivity(openMainActivity);
                         finish();
 

@@ -1,6 +1,7 @@
 package www.justme.co.in.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -47,6 +49,7 @@ public class NotificationActivity extends BasicActivity implements GetResult.MyL
     SessionManager sessionManager;
     User user;
     CustPrograssbar custPrograssbar;
+    Boolean data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +58,18 @@ public class NotificationActivity extends BasicActivity implements GetResult.MyL
         getSupportActionBar().setTitle("Notification");
 
         sessionManager = new SessionManager(NotificationActivity.this);
-        user = sessionManager.getUserDetails("");
-        custPrograssbar = new CustPrograssbar();
-        getNotification();
+        data = sessionManager.getBooleanData("login");
+        if (data == true){
+            user = sessionManager.getUserDetails("");
+            custPrograssbar = new CustPrograssbar();
+            getNotification();
+        }else {
+            Toast.makeText(getApplicationContext(), "You are not Logged In", Toast.LENGTH_SHORT).show();
+            Intent login = new Intent(NotificationActivity.this, LoginActivity.class);
+            finish();
+            startActivity(login);
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

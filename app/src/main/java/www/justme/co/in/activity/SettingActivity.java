@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cscodetech.townclap.R;
 import www.justme.co.in.model.User;
@@ -44,6 +45,7 @@ public class SettingActivity extends BasicActivity {
 
 
     CustPrograssbar custPrograssbar;
+    Boolean data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,16 @@ public class SettingActivity extends BasicActivity {
         getSupportActionBar().setTitle("My Profile");
         custPrograssbar = new CustPrograssbar();
         sessionManager = new SessionManager(SettingActivity.this);
-        user = sessionManager.getUserDetails("");
-        txtName.setText("" + user.getName());
-        txtMob.setText("" + user.getMobile());
+        data = sessionManager.getBooleanData("login");
+        if (data == true){
+            user = sessionManager.getUserDetails("");
+        }else {
+            Toast.makeText(getApplicationContext(), "You are not Logged In", Toast.LENGTH_SHORT).show();
+            Intent login = new Intent(SettingActivity.this, LoginActivity.class);
+            finish();
+            startActivity(login);
+        }
+
 
     }
 

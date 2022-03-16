@@ -39,7 +39,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             loadFragment(new HomeFragment());
             BottomNavigationView navigation = findViewById(R.id.navigation);
             navigation.setOnNavigationItemSelectedListener(this);
-            Log.e("i am try", "MyClass.getView() — get item number");
 
     }
 

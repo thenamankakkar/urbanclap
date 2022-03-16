@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,7 @@ public class SearchActivity extends BasicActivity implements GetResult.MyListene
     CustPrograssbar custPrograssbar;
     SessionManager sessionManager;
     User user;
+    Boolean data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,15 @@ public class SearchActivity extends BasicActivity implements GetResult.MyListene
         ButterKnife.bind(this);
         custPrograssbar = new CustPrograssbar();
         sessionManager = new SessionManager(SearchActivity.this);
-        user = sessionManager.getUserDetails("");
+        data = sessionManager.getBooleanData("login");
+        if (data == true){
+            user = sessionManager.getUserDetails("");
+        }else {
+            Toast.makeText(getApplicationContext(), "You are not Logged In", Toast.LENGTH_SHORT).show();
+            Intent login = new Intent(SearchActivity.this, LoginActivity.class);
+            finish();
+            startActivity(login);
+        }
         recyclerProduct.setLayoutManager(new LinearLayoutManager(this));
         edSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {

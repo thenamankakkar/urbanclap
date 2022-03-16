@@ -60,6 +60,7 @@ public class BookingActivity extends AppCompatActivity implements GetResult.MyLi
 
     ItemAdp itemAdp;
     List<CustomerorderlistItem> orderHistories = new ArrayList<>();
+    Boolean data;
 
 
     @Override
@@ -72,7 +73,15 @@ public class BookingActivity extends AppCompatActivity implements GetResult.MyLi
 
         custPrograssbar = new CustPrograssbar();
         sessionManager = new SessionManager(BookingActivity.this);
-        user = sessionManager.getUserDetails("");
+        data = sessionManager.getBooleanData("login");
+        if (data == true){
+            user = sessionManager.getUserDetails("");
+        }else {
+            Toast.makeText(getApplicationContext(), "You are not Logged In", Toast.LENGTH_SHORT).show();
+            Intent login = new Intent(BookingActivity.this, LoginActivity.class);
+            finish();
+            startActivity(login);
+        }
         gridLayoutManager = new StaggeredGridLayoutManager(1, 1);
         myRecyclerView.setLayoutManager(gridLayoutManager);
         itemAdp = new ItemAdp(BookingActivity.this, new ArrayList<>());
