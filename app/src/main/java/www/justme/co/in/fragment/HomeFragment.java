@@ -174,11 +174,21 @@ public class HomeFragment extends Fragment implements CategoryAdapter.RecyclerTo
     private void getHome() {
         custPrograssbar.prograssCreate(getActivity());
         JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("uid", user.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(data){
+            try {
+                jsonObject.put("uid", user.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        else {
+            try {
+                jsonObject.put("uid", 8);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         RequestBody bodyRequest = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Call<JsonObject> call = APIClient.getInterface().getHome(bodyRequest);
         GetResult getResult = new GetResult();

@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
     static Retrofit retrofit = null;
-    public static String baseUrl = "https://service.smartads.website/";
+    public static String baseUrl = "https://service.justme.co.in/";
     public static final String APPEND_URL = "/tcapi/";
     public static UserService getInterface() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
