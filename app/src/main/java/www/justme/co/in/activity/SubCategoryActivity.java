@@ -56,6 +56,7 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
     CustPrograssbar custPrograssbar;
     SessionManager sessionManager;
     User user;
+    Boolean data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,12 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
         ButterKnife.bind(this);
         custPrograssbar = new CustPrograssbar();
         sessionManager = new SessionManager(SubCategoryActivity.this);
-        user = sessionManager.getUserDetails("");
+        data = sessionManager.getBooleanData("login");
+        if (data == true){
+            user = sessionManager.getUserDetails("");
+        }
+
+        //user = sessionManager.getUserDetails("");
         cid = getIntent().getStringExtra("cid");
         sid = getIntent().getStringExtra("sid");
         name = getIntent().getStringExtra("name");
@@ -90,13 +96,25 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
     private void getData() {
         custPrograssbar.prograssCreate(this);
         JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("uid", user.getId());
-            jsonObject.put("cid", cid);
-            jsonObject.put("sid", sid);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (data==true){
+            try {
+                jsonObject.put("uid", user.getId());
+                jsonObject.put("cid", cid);
+                jsonObject.put("sid", sid);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        else{
+            try {
+                jsonObject.put("uid", 8);
+                jsonObject.put("cid", cid);
+                jsonObject.put("sid", sid);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         RequestBody bodyRequest = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
         Call<JsonObject> call = APIClient.getInterface().sChildList(bodyRequest);
         GetResult getResult = new GetResult();
